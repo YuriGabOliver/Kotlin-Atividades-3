@@ -1,0 +1,187 @@
+XML:
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ADA8A8"
+    android:backgroundTint="#888A86"
+    tools:context=".MainActivity">
+
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/coming_soon"
+        android:text="CHURRASPAR"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
+
+
+    <EditText
+        android:id="@+id/homensInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:hint="Homens"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        tools:ignore="Autofill,HardcodedText,TouchTargetSizeCheck,VisualLintTextFieldSize" />
+
+    <EditText
+        android:id="@+id/mulheresInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:hint="Mulheres"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/homensInput"
+        tools:ignore="Autofill,HardcodedText,TextContrastCheck,TouchTargetSizeCheck,VisualLintTextFieldSize" />
+
+    <EditText
+        android:id="@+id/criancasInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:hint="Crianças"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mulheresInput"
+        tools:ignore="Autofill,HardcodedText,TextContrastCheck,TouchTargetSizeCheck,VisualLintTextFieldSize" />
+
+
+    <Button
+        android:id="@+id/calcularButon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:backgroundTint="#33C171"
+        android:text="Calcular"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/criancasInput"
+        tools:ignore="HardcodedText" />
+
+    <Button
+        android:id="@+id/limparButon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:backgroundTint="#33C070"
+        android:text="Limpar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/calcularButon"
+        tools:ignore="HardcodedText" />
+
+
+    <TextView
+        android:id="@+id/resultadoText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="320dp"
+        android:padding="16dp"
+        android:text="Resultado"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/limparButon"
+        tools:ignore="HardcodedText" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+------------------------
+package com.example.churraspar
+
+import android.annotation.SuppressLint
+import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import kotlin.math.roundToInt
+
+class MainActivity : AppCompatActivity() {
+
+    @SuppressLint("MissingInflatedId", "SetTextI18n")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+
+        val homensInput = findViewById<EditText>(R.id.homensInput)
+        val mulheresInput = findViewById<EditText>(R.id.mulheresInput)
+        val criancasInput = findViewById<EditText>(R.id.criancasInput)
+        val calcularBtn = findViewById<Button>(R.id.calcularButon)
+        val limparBtn = findViewById<Button>(R.id.limparButon)
+        val resultadoText = findViewById<TextView>(R.id.resultadoText)
+
+
+        calcularBtn.setOnClickListener {
+            val homens = homensInput.text.toString().toIntOrNull() ?: 0
+            val mulheres = mulheresInput.text.toString().toIntOrNull() ?: 0
+            val criancas = criancasInput.text.toString().toIntOrNull() ?: 0
+
+
+            val carneHomens = homens * 400
+            val carneMulheres = mulheres * 300
+            val carneCriancas = criancas * 200
+            val carneTotal = (carneHomens + carneMulheres + carneCriancas) * 1.1
+
+
+            val aperitivosHomens = homens * 150
+            val aperitivosMulheres = mulheres * 100
+            val aperitivosCriancas = criancas * 50
+            val aperitivosTotal = (aperitivosHomens + aperitivosMulheres + aperitivosCriancas) * 1.1
+
+
+            val cervejaHomens = homens * 4.0
+            val cervejaMulheres = mulheres * 2.0
+            val cervejaTotal = (cervejaHomens + cervejaMulheres) * 1.1
+
+
+            val aguaMulheres = mulheres * 2.0
+            val aguaCriancas = criancas * 2.0
+            val aguaTotal = (aguaMulheres + aguaCriancas) * 1.1
+
+
+            val refrigeranteMulheres = mulheres * 1.5
+            val refrigeranteCriancas = criancas * 1.5
+            val refrigeranteTotal = (refrigeranteMulheres + refrigeranteCriancas) * 1.1
+
+
+            resultadoText.text = """
+                Carne Total: ${carneTotal.roundToInt()}g
+                Aperitivos Total: ${aperitivosTotal.roundToInt()}g
+                Cerveja Total: ${cervejaTotal.roundToInt()}L
+                Água Total: ${aguaTotal.roundToInt()}L
+                Refrigerante Total: ${refrigeranteTotal.roundToInt()}L
+            """.trimIndent()
+        }
+
+
+        limparBtn.setOnClickListener {
+            homensInput.text.clear()
+            mulheresInput.text.clear()
+            criancasInput.text.clear()
+            resultadoText.text = ""
+        }
+    }
+}
